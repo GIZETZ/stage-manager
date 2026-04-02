@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin – Gestion des fiches PFE 2025-2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b3e;
+    --gold: #c8952c;
+    --gold-light: #f0c96a;
+    --cream: #faf7f2;
+    --warm-white: #fffdf9;
+    --mid: #6b7280;
+    --border: #e2d9cc;
+    --success: #166534;
+    --success-bg: #dcfce7;
+    --error: #991b1b;
+    --error-bg: #fee2e2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+  }
+
+  header {
+    background: var(--navy);
+    color: #fff;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--gold);
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+  }
+
+  .user-menu {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: #b07d20;
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid #fff;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+  }
+
+  .login-container {
+    max-width: 400px;
+    margin: 3rem auto;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  .login-container h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(200,149,44,0.15);
+  }
+
+  .alert {
+    padding: 0.9rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    display: none;
+    animation: slideDown 0.3s ease;
+  }
+
+  @keyframes slideDown {
+    from { transform: translateY(-10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .alert.show { display: block; }
+
+  .alert.success {
+    background: var(--success-bg);
+    color: var(--success);
+    border: 1px solid var(--success);
+  }
+
+  .alert.error {
+    background: var(--error-bg);
+    color: var(--error);
+    border: 1px solid var(--error);
+  }
+
+  .dashboard {
+    display: none;
+  }
+
+  .dashboard.show { display: block; }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .stat-card .value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--navy);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-card .label {
+    font-size: 0.85rem;
+    color: var(--mid);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-download {
+    background: linear-gradient(135deg, var(--gold), #b07d20);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(200,149,44,0.3);
+  }
+
+  .btn-download:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(200,149,44,0.4);
+  }
+
+  .table-wrapper {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  table thead {
+    background: var(--navy);
+    color: #fff;
+  }
+
+  table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 0.75rem;
+  }
+
+  table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table tbody tr:hover {
+    background: #fafbfc;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .status-badge.oui {
+    background: var(--success-bg);
+    color: var(--success);
+  }
+
+  .status-badge.non {
+    background: var(--error-bg);
+    color: var(--error);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--mid);
+  }
+
+  .empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .stats {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    table {
+      font-size: 0.75rem;
+    }
+
+    table th, table td {
+      padding: 0.7rem;
+    }
+
+    .controls {
+      flex-direction: column;
+    }
+
+    .btn { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Login Section -->
+<div id="loginSection">
+  <header>
+    <h1>Stage Manager</h1>
+  </header>
+  <div class="login-container">
+    <h2>Accès Admin</h2>
+    <div class="alert" id="alertLogin"></div>
+    <form onsubmit="handleLogin(event)">
+      <div class="field">
+        <label for="username">Identifiant</label>
+        <input type="text" id="username" placeholder="Entrez votre identifiant" required>
+      </div>
+      <div class="field">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" placeholder="Entrez votre mot de passe" required>
+      </div>
+      <button class="btn btn-primary" style="width: 100%;" type="submit">Connexion</button>
+    </form>
+  </div>
+</div>
+
+<!-- Dashboard Section -->
+<div id="dashboardSection" class="dashboard">
+  <header>
+    <div>
+      <h1>Dashboard – Gestion des Stages</h1>
+      <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-top: 0.3rem;">Année académique 2025-2026</p>
+    </div>
+    <div class="user-menu">
+      <button class="btn btn-secondary" onclick="downloadExcel()">📥 Télécharger Excel</button>
+      <button class="btn btn-secondary" onclick="handleLogout()">Déconnexion</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="alert" id="alertDashboard"></div>
+
+    <div class="stats" id="stats">
+      <div class="stat-card">
+        <div class="value" id="totalFiches">0</div>
+        <div class="label">Fiches Total</div>
+      </div>
+      <div class="stat-card">
+        <div class="value" id="enStageCount">0</div>
+        <div class="label">En Stage</div>
+      </div>
+      <div class="stat-card">
+        <div class="value" id="pasStageCount">0</div>
+        <div class="label">Pas en Stage</div>
+      </div>
+      <div class="stat-card">
+        <div class="value" id="tauxPlacement">0%</div>
+        <div class="label">Taux de Placement</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="btn btn-primary" onclick="loadFiches()">🔄 Actualiser</button>
+      <button class="btn btn-download" onclick="downloadExcel()">📥 Télécharger Excel</button>
+    </div>
+
+    <div class="table-wrapper">
+      <table id="fichesTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Étudiant</th>
+            <th>Contact</th>
+            <th>Niveau</th>
+            <th>Filière</th>
+            <th>En Stage</th>
+            <th>Entreprise</th>
+            <th>Commune</th>
+            <th>Date Début</th>
+            <th>Date Fin</th>
+            <th>Créé le</th>
+          </tr>
+        </thead>
+        <tbody id="fichesBody">
+        </tbody>
+      </table>
+    </div>
+
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <div class="empty-state-icon">📋</div>
+      <h3>Aucune fiche enregistrée</h3>
+      <p>Les données apparaîtront ici une fois que les étudiants auront rempli le formulaire.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const API_URL = '/api'; // À adapter selon le déploiement
+  let authToken = null;
+
+  function showAlert(msg, type = 'success', section = 'alertLogin') {
+    const alert = document.getElementById(section);
+    alert.textContent = msg;
+    alert.className = `alert ${type} show`;
+    setTimeout(() => alert.classList.remove('show'), 5000);
+  }
+
+  async function handleLogin(e) {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    try {
+      const response = await fetch(`${API_URL}/admin/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+
+      if (!response.ok) throw new Error('Identifiants invalides');
+
+      const data = await response.json();
+      if (!data.access) throw new Error(data.message);
+
+      // Utiliser le token retourné par le serveur
+      authToken = data.token;
+      localStorage.setItem('authToken', authToken);
+
+      document.getElementById('loginSection').style.display = 'none';
+      document.getElementById('dashboardSection').classList.add('show');
+
+      showAlert('Connecté avec succès!', 'success', 'alertDashboard');
+      loadStats();
+      loadFiches();
+    } catch (error) {
+      showAlert(error.message, 'error', 'alertLogin');
+    }
+  }
+
+  async function loadStats() {
+    try {
+      const token = localStorage.getItem('authToken') || authToken;
+      const response = await fetch(`${API_URL}/admin/stats?token=${token}`);
+
+      if (!response.ok) throw new Error('Erreur lors du chargement des statistiques');
+
+      const stats = await response.json();
+
+      document.getElementById('totalFiches').textContent = stats.total_fiches;
+      document.getElementById('enStageCount').textContent = stats.en_stage;
+      document.getElementById('pasStageCount').textContent = stats.pas_stage;
+      document.getElementById('tauxPlacement').textContent = stats.taux_placement;
+    } catch (error) {
+      showAlert(error.message, 'error', 'alertDashboard');
+    }
+  }
+
+  async function loadFiches() {
+    try {
+      const token = localStorage.getItem('authToken') || authToken;
+      const response = await fetch(`${API_URL}/admin/fiches?token=${token}`);
+
+      if (!response.ok) throw new Error('Erreur lors du chargement des fiches');
+
+      const fiches = await response.json();
+      const tbody = document.getElementById('fichesBody');
+      const emptyState = document.getElementById('emptyState');
+
+      if (fiches.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.style.display = 'block';
+        document.getElementById('fichesTable').style.display = 'none';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      document.getElementById('fichesTable').style.display = 'table';
+
+      tbody.innerHTML = fiches.map(fiche => `
+        <tr>
+          <td>${fiche.id}</td>
+          <td>${fiche.nom_etudiant}</td>
+          <td>${fiche.contact_etudiant}</td>
+          <td>${fiche.niveau_etude}</td>
+          <td>${fiche.filiere_classe}</td>
+          <td><span class="status-badge ${fiche.en_stage.toLowerCase()}">${fiche.en_stage}</span></td>
+          <td>${fiche.nom_entreprise || '—'}</td>
+          <td>${fiche.situation_entreprise || '—'}</td>
+          <td>${formatDate(fiche.date_debut_stage) || '—'}</td>
+          <td>${formatDate(fiche.date_fin_stage) || '—'}</td>
+          <td>${formatDateTime(fiche.date_creation)}</td>
+        </tr>
+      `).join('');
+
+      showAlert('Données actualisées', 'success', 'alertDashboard');
+    } catch (error) {
+      showAlert(error.message, 'error', 'alertDashboard');
+    }
+  }
+
+  async function downloadExcel() {
+    try {
+      const token = localStorage.getItem('authToken') || authToken;
+      window.location.href = `${API_URL}/admin/download-excel?token=${token}`;
+    } catch (error) {
+      showAlert('Erreur lors du téléchargement', 'error', 'alertDashboard');
+    }
+  }
+
+  function handleLogout() {
+    localStorage.removeItem('authToken');
+    authToken = null;
+    document.getElementById('dashboardSection').classList.remove('show');
+    document.getElementById('loginSection').style.display = 'block';
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+  }
+
+  function formatDate(date) {
+    if (!date) return '';
+    const d = new Date(date);
+    return d.toLocaleDateString('fr-FR');
+  }
+
+  function formatDateTime(datetime) {
+    if (!datetime) return '';
+    const d = new Date(datetime);
+    return d.toLocaleDateString('fr-FR') + ' ' + d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  // Au chargement, vérifier si l'utilisateur est déjà authentifié
+  window.addEventListener('load', async () => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      // Vérifier que le token est toujours valide
+      try {
+        const response = await fetch(`${API_URL}/admin/verify-token?token=${token}`);
+        const result = await response.json();
+        
+        if (result.valid) {
+          authToken = token;
+          document.getElementById('loginSection').style.display = 'none';
+          document.getElementById('dashboardSection').classList.add('show');
+          loadStats();
+          loadFiches();
+        } else {
+          // Token invalide, forcer la reconnexion
+          localStorage.removeItem('authToken');
+          authToken = null;
+          showAlert('Session expirée. Veuillez vous reconnecter.', 'error', 'alertLogin');
+        }
+      } catch (error) {
+        // Erreur lors de la vérification, forcer la reconnexion
+        localStorage.removeItem('authToken');
+        authToken = null;
+      }
+    }
+  });
+</script>
+</body>
+</html>

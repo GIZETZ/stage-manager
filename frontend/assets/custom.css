@@ -1,0 +1,31 @@
+/* Fichier CSS personnalisé - styles additionnels optionnels */
+
+:root {
+  --navy: #0d1b3e;
+  --gold: #c8952c;
+  --gold-light: #f0c96a;
+  --cream: #faf7f2;
+  --warm-white: #fffdf9;
+  --mid: #6b7280;
+  --border: #e2d9cc;
+  --success: #166534;
+  --success-bg: #dcfce7;
+  --error: #991b1b;
+  --error-bg: #fee2e2;
+}
+
+/* Animations personnalisées */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .5; }
+}
+
+.loading {
+  animation: pulse 2s infinite;
+}
+
+/* Print styles */
+@media print {
+  * { background: transparent !important; color: #000 !important; }
+  header, nav, .no-print { display: none !important; }
+}

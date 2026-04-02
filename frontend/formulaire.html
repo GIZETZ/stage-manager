@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche de Situation des Stages PFE 2025–2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b3e;
+    --gold: #c8952c;
+    --gold-light: #f0c96a;
+    --cream: #faf7f2;
+    --warm-white: #fffdf9;
+    --mid: #6b7280;
+    --border: #e2d9cc;
+    --success: #166534;
+    --success-bg: #dcfce7;
+    --error: #991b1b;
+    --error-bg: #fee2e2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--navy);
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(200,149,44,.06) 40px,
+      rgba(200,149,44,.06) 41px
+    );
+  }
+  header .badge {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: .35rem .9rem;
+    border-radius: 999px;
+    margin-bottom: 1.2rem;
+  }
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.5rem, 4vw, 2.4rem);
+    color: #fff;
+    line-height: 1.2;
+    position: relative;
+  }
+  header h1 span { color: var(--gold-light); }
+  header p.sub {
+    margin-top: .6rem;
+    color: rgba(255,255,255,.55);
+    font-size: .9rem;
+    position: relative;
+  }
+  .gold-line {
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    margin: 1.4rem auto 0;
+    border-radius: 2px;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 2.5rem;
+  }
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .4rem;
+  }
+  .step-dot {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--warm-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--mid);
+    transition: all .3s;
+  }
+  .step.active .step-dot {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+  }
+  .step.done .step-dot {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #fff;
+  }
+  .step-label {
+    font-size: .7rem;
+    font-weight: 500;
+    color: var(--mid);
+    white-space: nowrap;
+  }
+  .step.active .step-label { color: var(--navy); font-weight: 600; }
+  .step-line {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    margin: 0 .5rem;
+    margin-bottom: 1.4rem;
+    min-width: 30px;
+    transition: background .3s;
+  }
+  .step-line.done { background: var(--gold); }
+
+  .section {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    display: none;
+    animation: fadeUp .35s ease;
+  }
+  .section.active { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    color: var(--navy);
+    margin-bottom: .3rem;
+  }
+  .section-sub {
+    font-size: .82rem;
+    color: var(--mid);
+    margin-bottom: 1.6rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+  .field-grid .full { grid-column: 1/-1; }
+  @media(max-width: 540px) {
+    .field-grid { grid-template-columns: 1fr; }
+    .field-grid .full { grid-column: 1; }
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+  }
+  label {
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .03em;
+    color: var(--navy);
+    text-transform: uppercase;
+  }
+  label .req { color: var(--gold); margin-left: .2rem; }
+  input[type="text"],
+  input[type="tel"],
+  input[type="date"],
+  select {
+    width: 100%;
+    padding: .7rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    color: var(--navy);
+    background: #fff;
+    transition: border-color .2s, box-shadow .2s;
+    outline: none;
+    appearance: none;
+  }
+  input:focus, select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(200,149,44,.15);
+  }
+  input.invalid, select.invalid {
+    border-color: var(--error);
+    box-shadow: 0 0 0 3px rgba(153,27,27,.1);
+  }
+
+  .date-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    position: relative;
+  }
+  .date-input-wrapper input[type="date"] {
+    flex: 1;
+  }
+  .date-display {
+    font-size: .9rem;
+    color: var(--navy);
+    font-weight: 500;
+    min-width: 100px;
+    text-align: right;
+    padding-right: 0.5rem;
+  }
+  
+  .field-hint {
+    font-size: .75rem;
+    color: var(--mid);
+  }
+  .field-error {
+    font-size: .75rem;
+    color: var(--error);
+    display: none;
+  }
+  .field-error.show { display: block; }
+
+  .student-select-wrap {
+    position: relative;
+  }
+  .student-select-wrap::after {
+    content: '▾';
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    pointer-events: none;
+    font-size: .9rem;
+  }
+
+  .toggle-group {
+    display: flex;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .toggle-group input { display: none; }
+  .toggle-group label {
+    flex: 1;
+    text-align: center;
+    padding: .75rem;
+    cursor: pointer;
+    font-size: .85rem;
+    font-weight: 600;
+    letter-spacing: .05em;
+    color: var(--mid);
+    background: #fff;
+    transition: all .2s;
+    text-transform: uppercase;
+    border: none;
+  }
+  .toggle-group label:not(:last-child) {
+    border-right: 1.5px solid var(--border);
+  }
+  .toggle-group input:checked + label {
+    background: var(--navy);
+    color: #fff;
+  }
+  #stageOui:checked + label { background: #166534; color: #fff; }
+  #stageNon:checked + label { background: #991b1b; color: #fff; }
+
+  .stage-fields {
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+    display: none;
+  }
+  .stage-fields.visible { display: block; }
+
+  .info-box {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    padding: .9rem 1rem;
+    font-size: .82rem;
+    color: #1e40af;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: .6rem;
+    align-items: flex-start;
+  }
+  .info-box .icon { flex-shrink: 0; font-size: 1rem; }
+
+  .alert {
+    padding: 0.9rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: none;
+    animation: slideDown 0.3s ease;
+  }
+  @keyframes slideDown {
+    from { transform: translateY(-10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .alert.show { display: block; }
+  .alert.success {
+    background: var(--success-bg);
+    color: var(--success);
+    border: 1px solid var(--success);
+  }
+  .alert.error {
+    background: var(--error-bg);
+    color: var(--error);
+    border: 1px solid var(--error);
+  }
+
+  .btn-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: .9rem;
+    padding: .8rem 2rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all .2s;
+    letter-spacing: .03em;
+  }
+  .btn-primary {
+    background: var(--navy);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #1a2f5a; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(13,27,62,.25); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--mid);
+    border: 1.5px solid var(--border);
+  }
+  .btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
+  .btn-submit {
+    background: linear-gradient(135deg, var(--gold), #b07d20);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(200,149,44,.3);
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(200,149,44,.4); }
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .88rem;
+  }
+  .summary-table tr { border-bottom: 1px solid var(--border); }
+  .summary-table td:first-child {
+    padding: .7rem .5rem .7rem 0;
+    color: var(--mid);
+    font-weight: 500;
+    width: 45%;
+    vertical-align: top;
+  }
+  .summary-table td:last-child {
+    padding: .7rem 0;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  #successScreen {
+    display: none;
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    animation: fadeUp .5s ease;
+  }
+  .success-icon {
+    width: 72px;
+    height: 72px;
+    background: var(--success-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 1.5rem;
+  }
+  #successScreen h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.7rem;
+    color: var(--navy);
+    margin-bottom: .5rem;
+  }
+  #successScreen p { color: var(--mid); font-size: .9rem; line-height: 1.6; }
+
+  @media print {
+    header, .steps, .btn-row, .info-box { display: none !important; }
+    .section { display: block !important; border: none; padding: 0; }
+    body { background: #fff; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Année Académique 2025 – 2026</div>
+  <h1>Fiche de Situation des Stages <span>PFE</span></h1>
+  <p class="sub">Remplissez votre fiche individuellement — toutes les données sont enregistrées</p>
+  <div class="gold-line"></div>
+</header>
+
+<div class="container">
+
+  <div class="alert" id="globalAlert"></div>
+
+  <div class="steps" id="stepBar">
+    <div class="step active" id="stp1">
+      <div class="step-dot">1</div>
+      <span class="step-label">Identité</span>
+    </div>
+    <div class="step-line" id="line1"></div>
+    <div class="step active" id="stp2">
+      <div class="step-dot">2</div>
+      <span class="step-label">Situation</span>
+    </div>
+    <div class="step-line" id="line2"></div>
+    <div class="step" id="stp3">
+      <div class="step-dot">3</div>
+      <span class="step-label">Confirmation</span>
+    </div>
+  </div>
+
+  <!-- STEP 1: Identity -->
+  <div class="section active" id="step1">
+    <div class="section-title">Votre identité</div>
+    <div class="section-sub">Sélectionnez votre nom dans la liste, puis renseignez vos coordonnées.</div>
+
+    <div class="field-grid">
+      <div class="field full">
+        <label>Nom & Prénoms <span class="req">*</span></label>
+        <div class="student-select-wrap">
+          <select id="nomEtudiant">
+            <option value="">— Sélectionnez votre nom —</option>
+          </select>
+        </div>
+        <div class="field-error" id="err-nom">Veuillez sélectionner votre nom.</div>
+      </div>
+
+      <div class="field">
+        <label>Contact Étudiant <span class="req">*</span></label>
+        <input type="tel" id="contactEtudiant" placeholder="Ex: 07 00 00 00 00">
+        <div class="field-error" id="err-contact">Numéro de téléphone requis.</div>
+      </div>
+
+      <div class="field">
+        <label>Niveau d'étude <span class="req">*</span></label>
+        <div class="student-select-wrap">
+          <select id="niveauEtude" disabled>
+            <option value="Licence 3" selected>Licence 3</option>
+          </select>
+        </div>
+        <div class="field-error" id="err-niveau">Veuillez choisir votre niveau.</div>
+      </div>
+
+      <div class="field">
+        <label>Filière — Classe <span class="req">*</span></label>
+        <input type="text" id="filiereClasse" value="SIGL3" disabled>
+        <div class="field-error" id="err-filiere">Ce champ est requis.</div>
+      </div>
+
+      <div class="field">
+        <label>Date de la fiche <span class="req">*</span></label>
+        <div class="date-input-wrapper">
+          <input type="date" id="dateFiche" lang="fr">
+          <span class="date-display" id="dateFicheDisplay">—</span>
+        </div>
+        <div class="field-error" id="err-date">Veuillez indiquer une date.</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <span></span>
+      <button class="btn btn-primary" onclick="goStep2()">Suivant →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Stage situation -->
+  <div class="section" id="step2">
+    <div class="section-title">Situation de stage</div>
+    <div class="section-sub">Indiquez si vous avez trouvé un stage et, le cas échéant, les informations de l'entreprise.</div>
+
+    <div class="info-box">
+      <span class="icon">ℹ️</span>
+      <span>Si vous n'êtes <strong>pas encore en stage</strong>, sélectionnez « Non » — le reste sera optionnel.</span>
+    </div>
+
+    <div class="field">
+      <label>Êtes-vous en stage ? <span class="req">*</span></label>
+      <div class="toggle-group">
+        <input type="radio" name="enStage" id="stageOui" value="OUI" onchange="toggleStageFields()">
+        <label for="stageOui">✓ OUI</label>
+        <input type="radio" name="enStage" id="stageNon" value="NON" onchange="toggleStageFields()">
+        <label for="stageNon">✗ NON</label>
+      </div>
+      <div class="field-error" id="err-stage">Veuillez indiquer votre situation.</div>
+    </div>
+
+    <div class="stage-fields field-grid" id="stageFields">
+      <div class="field full">
+        <label>Nom de l'entreprise <span class="req">*</span></label>
+        <input type="text" id="nomEntreprise" placeholder="Raison sociale de l'entreprise">
+        <div class="field-error" id="err-entreprise">Nom de l'entreprise requis si en stage.</div>
+      </div>
+
+      <div class="field full">
+        <label>Situation / Commune de l'entreprise <span class="req">*</span></label>
+        <input type="text" id="situationEntreprise" placeholder="Ex: Plateau, Cocody, Yopougon...">
+        <div class="field-error" id="err-situation">Commune requise si en stage.</div>
+      </div>
+
+      <div class="field">
+        <label>Contact entreprise</label>
+        <input type="tel" id="contactEntreprise" placeholder="Ex: 20 00 00 00 / 07 00 00 00">
+        <div class="field-hint">Numéro du maître de stage ou standard</div>
+      </div>
+
+      <div class="field"></div>
+
+      <div class="field">
+        <label>Date de début <span class="req">*</span></label>
+        <div class="date-input-wrapper">
+          <input type="date" id="dateDebut" lang="fr">
+          <span class="date-display" id="dateDebutDisplay">—</span>
+        </div>
+        <div class="field-error" id="err-debut">Date de début requise.</div>
+      </div>
+
+      <div class="field">
+        <label>Date de fin <span style="color:var(--mid);font-weight:400">(facultative)</span></label>
+        <div class="date-input-wrapper">
+          <input type="date" id="dateFin" lang="fr">
+          <span class="date-display" id="dateFinDisplay">—</span>
+        </div>
+        <div class="field-hint">Laissez vide si non définie</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(1)">← Retour</button>
+      <button class="btn btn-primary" onclick="goStep3()">Suivant →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Summary & confirm -->
+  <div class="section" id="step3">
+    <div class="section-title">Vérification & envoi</div>
+    <div class="section-sub">Vérifiez vos informations avant de valider définitivement.</div>
+
+    <table class="summary-table" id="summaryTable">
+      <tbody id="summaryBody"></tbody>
+    </table>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(2)">← Modifier</button>
+      <button class="btn btn-submit" onclick="submitForm()" id="btnSubmit">✓ Valider ma fiche</button>
+    </div>
+  </div>
+
+  <!-- Success screen -->
+  <div id="successScreen">
+    <div class="success-icon">✓</div>
+    <h2>Fiche enregistrée !</h2>
+    <p id="successMsg">Vos informations ont bien été enregistrées.<br>Conservez cette confirmation.</p>
+    <br>
+    <div id="successDetails" style="background:var(--cream);border-radius:10px;padding:1.2rem;text-align:left;margin-top:1rem;font-size:.85rem;"></div>
+    <br>
+    <button class="btn btn-secondary" onclick="resetForm()" style="margin-top:1rem;">Nouvelle saisie</button>
+  </div>
+
+</div>
+
+<script>
+  const API_URL = '/api'; // Adapter selon le déploiement
+  let currentStep = 1;
+  let selectedStudentId = null;
+  let selectedStudentNom = '';
+
+  // Charger la liste des étudiants depuis l'API
+  async function loadStudents() {
+    try {
+      const response = await fetch(`${API_URL}/etudiants`);
+      if (!response.ok) {
+        console.error('Erreur lors du chargement des étudiants:', response.status);
+        return;
+      }
+      const etudiants = await response.json();
+      const select = document.getElementById('nomEtudiant');
+      
+      // Ajouter les étudiants au select
+      etudiants.forEach(etudiant => {
+        const option = document.createElement('option');
+        option.value = etudiant.id;
+        option.textContent = etudiant.nom;
+        select.appendChild(option);
+      });
+
+      // Event listener pour stocker l'ID et le nom sélectionnés
+      select.addEventListener('change', function() {
+        if (this.value) {
+          selectedStudentId = parseInt(this.value);
+          selectedStudentNom = this.options[this.selectedIndex].text;
+        } else {
+          selectedStudentId = null;
+          selectedStudentNom = '';
+        }
+      });
+    } catch (error) {
+      console.error('Erreur loading students:', error);
+    }
+  }
+
+  function goStep(n) {
+    document.getElementById('step' + currentStep).classList.remove('active');
+    currentStep = n;
+    document.getElementById('step' + currentStep).classList.add('active');
+    updateStepBar();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateStepBar() {
+    [1,2,3].forEach(i => {
+      const dot = document.getElementById('stp' + i);
+      dot.classList.remove('active','done');
+      if (i < currentStep) dot.classList.add('done');
+      else if (i === currentStep) dot.classList.add('active');
+    });
+    [1,2].forEach(i => {
+      const line = document.getElementById('line' + i);
+      line.classList.toggle('done', i < currentStep);
+    });
+  }
+
+  function toggleStageFields() {
+    const oui = document.getElementById('stageOui').checked;
+    document.getElementById('stageFields').classList.toggle('visible', oui);
+    clearErr('err-stage');
+  }
+
+  function showErr(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg || el.textContent;
+    el.classList.add('show');
+    const input = el.id.replace('err-','');
+    const field = document.getElementById(input) || document.querySelector(`[id="${input}"]`);
+    if (field) field.classList.add('invalid');
+  }
+
+  function clearErr(id) {
+    document.getElementById(id)?.classList.remove('show');
+    const key = id.replace('err-','');
+    document.getElementById(key)?.classList.remove('invalid');
+  }
+
+  function clearAllErrors(...ids) { ids.forEach(clearErr); }
+
+  function showAlert(msg, type = 'success') {
+    const alert = document.getElementById('globalAlert');
+    alert.textContent = msg;
+    alert.className = `alert ${type} show`;
+    setTimeout(() => alert.classList.remove('show'), 5000);
+  }
+
+  function goStep2() {
+    clearAllErrors('err-nom','err-contact','err-niveau','err-filiere','err-date');
+    let ok = true;
+    if (!document.getElementById('nomEtudiant').value) { showErr('err-nom'); ok = false; }
+    if (!document.getElementById('contactEtudiant').value.trim()) { showErr('err-contact'); ok = false; }
+    if (!document.getElementById('niveauEtude').value) { showErr('err-niveau'); ok = false; }
+    if (!document.getElementById('filiereClasse').value.trim()) { showErr('err-filiere'); ok = false; }
+    if (!document.getElementById('dateFiche').value) { showErr('err-date'); ok = false; }
+    if (ok) goStep(2);
+  }
+
+  function goStep3() {
+    clearAllErrors('err-stage','err-entreprise','err-situation','err-debut');
+    let ok = true;
+    const enStage = document.querySelector('input[name="enStage"]:checked');
+    if (!enStage) { showErr('err-stage'); ok = false; }
+    if (enStage && enStage.value === 'OUI') {
+      if (!document.getElementById('nomEntreprise').value.trim()) { showErr('err-entreprise'); ok = false; }
+      if (!document.getElementById('situationEntreprise').value.trim()) { showErr('err-situation'); ok = false; }
+      if (!document.getElementById('dateDebut').value) { showErr('err-debut'); ok = false; }
+    }
+    if (ok) { buildSummary(); goStep(3); }
+  }
+
+  function buildSummary() {
+    const enStage = document.querySelector('input[name="enStage"]:checked');
+    const rows = [
+      ['Nom & Prénoms', document.getElementById('nomEtudiant').value],
+      ['Contact étudiant', document.getElementById('contactEtudiant').value],
+      ['Niveau d\'étude', document.getElementById('niveauEtude').value],
+      ['Filière – Classe', document.getElementById('filiereClasse').value],
+      ['Date de la fiche', fmtDate(document.getElementById('dateFiche').value)],
+      ['En stage', enStage ? enStage.value : '—'],
+    ];
+    if (enStage && enStage.value === 'OUI') {
+      rows.push(
+        ['Nom de l\'entreprise', document.getElementById('nomEntreprise').value],
+        ['Commune', document.getElementById('situationEntreprise').value],
+        ['Contact entreprise', document.getElementById('contactEntreprise').value || '—'],
+        ['Date de début', fmtDate(document.getElementById('dateDebut').value)],
+        ['Date de fin', document.getElementById('dateFin').value ? fmtDate(document.getElementById('dateFin').value) : 'Non définie'],
+      );
+    }
+    document.getElementById('summaryBody').innerHTML = rows.map(([k,v]) =>
+      `<tr><td>${k}</td><td>${v || '—'}</td></tr>`
+    ).join('');
+  }
+
+  function fmtDate(val) {
+    if (!val) return '—';
+    // Si c'est au format ISO (YYYY-MM-DD), on le convertit
+    if (val.includes('-')) {
+      const [y,m,d] = val.split('-');
+      return `${String(d).padStart(2,'0')}/${String(m).padStart(2,'0')}/${y}`;
+    }
+    // Sinon c'est déjà du JJ/MM/AAAA
+    return val;
+  }
+
+  // Convertir une date ISO YYYY-MM-DD en français JJ/MM/AAAA
+  function isoToFrench(isoDate) {
+    if (!isoDate) return '';
+    const [y, m, d] = isoDate.split('-');
+    return `${String(d).padStart(2,'0')}/${String(m).padStart(2,'0')}/${y}`;
+  }
+
+  // Convertir une date française JJ/MM/AAAA en ISO YYYY-MM-DD
+  function frenchDateToISO(frenchDate) {
+    if (!frenchDate) return null;
+    // Si c'est déjà du format ISO (type="date" envoie YYYY-MM-DD)
+    if (frenchDate.includes('-')) return frenchDate;
+    // Sinon conversion depuis JJ/MM/AAAA
+    const [d, m, y] = frenchDate.split('/');
+    return `${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;
+  }
+
+  async function submitForm() {
+    const btn = document.getElementById('btnSubmit');
+    btn.disabled = true;
+    btn.textContent = 'Envoi en cours...';
+
+    // Vérifier qu'un étudiant est sélectionné
+    if (!selectedStudentId) {
+      showAlert('Veuillez sélectionner votre nom.', 'error');
+      btn.disabled = false;
+      btn.textContent = '✓ Valider ma fiche';
+      return;
+    }
+
+    const enStage = document.querySelector('input[name="enStage"]:checked');
+    
+    // Récupérer les dates depuis les calendriers (format ISO YYYY-MM-DD)
+    const dateFiche = document.getElementById('dateFiche').value;
+    const dateDebut = document.getElementById('dateDebut').value;
+    const dateFin = document.getElementById('dateFin').value;
+
+    if (!dateFiche) {
+      showAlert('Veuillez sélectionner une date de fiche', 'error');
+      btn.disabled = false;
+      btn.textContent = '✓ Valider ma fiche';
+      return;
+    }
+
+    if (enStage && enStage.value === 'OUI' && !dateDebut) {
+      showAlert('Veuillez sélectionner une date de début', 'error');
+      btn.disabled = false;
+      btn.textContent = '✓ Valider ma fiche';
+      return;
+    }
+    
+    const data = {
+      etudiant_id: selectedStudentId,
+      contact_etudiant: document.getElementById('contactEtudiant').value,
+      niveau_etude: document.getElementById('niveauEtude').value,
+      filiere_classe: document.getElementById('filiereClasse').value,
+      date_fiche: dateFiche,
+      en_stage: enStage ? enStage.value : 'NON',
+      nom_entreprise: document.getElementById('nomEntreprise').value || null,
+      situation_entreprise: document.getElementById('situationEntreprise').value || null,
+      contact_entreprise: document.getElementById('contactEntreprise').value || null,
+      date_debut_stage: dateDebut || null,
+      date_fin_stage: dateFin || null,
+    };
+    
+    console.log('Submitting data:', data);
+
+    try {
+      const response = await fetch(`${API_URL}/soumettre-fiche`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      console.log('Response status:', response.status);
+      const responseText = await response.text();
+      console.log('Response:', responseText);
+      
+      if (!response.ok) {
+        throw new Error(`Erreur ${response.status}: ${responseText}`);
+      }
+
+      const result = JSON.parse(responseText);
+      
+      document.getElementById('step3').classList.remove('active');
+      const successScreen = document.getElementById('successScreen');
+      successScreen.style.display = 'block';
+
+      document.getElementById('successMsg').innerHTML =
+        `<strong>${selectedStudentNom}</strong>, vos informations ont bien été enregistrées.<br>Nous vous remercions.`;
+
+      const details = data.en_stage === 'OUI'
+        ? `<strong>Stage :</strong> ${data.nom_entreprise} — ${data.situation_entreprise}<br>
+           <strong>Du :</strong> ${fmtDate(data.date_debut_stage)} &nbsp;|&nbsp; <strong>Au :</strong> ${data.date_fin_stage ? fmtDate(data.date_fin_stage) : 'Non définie'}`
+        : '<strong>Statut :</strong> Pas encore en stage';
+
+      document.getElementById('successDetails').innerHTML =
+        `<strong>Date :</strong> ${fmtDate(data.date_fiche)}<br>
+         <strong>Filière :</strong> ${data.filiere_classe} | <strong>Niveau :</strong> ${data.niveau_etude}<br>
+         ${details}`;
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+      showAlert('Erreur: ' + error.message, 'error');
+      btn.disabled = false;
+      btn.textContent = '✓ Valider ma fiche';
+    }
+  }
+
+  function resetForm() {
+    document.getElementById('successScreen').style.display = 'none';
+    document.getElementById('nomEtudiant').value = '';
+    selectedStudentId = null;
+    selectedStudentNom = '';
+    document.getElementById('contactEtudiant').value = '';
+    // Niveau d'étude et Filière restent inchangés (ils sont disabled avec des valeurs fixes)
+    initializeDateFields();
+    document.querySelectorAll('input[name="enStage"]').forEach(r => r.checked = false);
+    document.getElementById('stageFields').classList.remove('visible');
+    ['nomEntreprise','situationEntreprise','contactEntreprise','dateDebut','dateFin']
+      .forEach(id => document.getElementById(id).value = '');
+    currentStep = 1;
+    goStep(1);
+  }
+
+  // Initialiser la date de la fiche avec la date du jour en format ISO
+  function initializeDateFields() {
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = String(today.getMonth() + 1).padStart(2, '0');
+    const d = String(today.getDate()).padStart(2, '0');
+    const isoDate = `${y}-${m}-${d}`;
+    
+    // Définir le calendrier avec la date ISO
+    document.getElementById('dateFiche').value = isoDate;
+    document.getElementById('dateFicheDisplay').textContent = isoToFrench(isoDate);
+    
+    // Ajouter les event listeners pour mettre à jour les affichages
+    ['dateFiche', 'dateDebut', 'dateFin'].forEach(id => {
+      const input = document.getElementById(id);
+      const display = document.getElementById(id + 'Display');
+      if (input && display) {
+        input.addEventListener('change', () => {
+          display.textContent = isoToFrench(input.value);
+        });
+        // Initialiser l'affichage si une valeur existe déjà
+        if (input.value) {
+          display.textContent = isoToFrench(input.value);
+        }
+      }
+    });
+  }
+
+  // Charger les étudiants et initialiser les champs au démarrage
+  loadStudents();
+  initializeDateFields();
+
+  document.querySelectorAll('input, select').forEach(el => {
+    el.addEventListener('input', () => el.classList.remove('invalid'));
+    el.addEventListener('change', () => el.classList.remove('invalid'));
+  });
+</script>
+</body>
+</html>

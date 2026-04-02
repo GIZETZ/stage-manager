@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: stage_manager
+      POSTGRES_USER: stage_user
+      POSTGRES_PASSWORD: stage_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://stage_user:stage_password@postgres:5432/stage_manager
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: admin123
+      ALLOWED_ORIGINS: http://localhost:3000,http://localhost:8000
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend:/app
+
+volumes:
+  postgres_data:
